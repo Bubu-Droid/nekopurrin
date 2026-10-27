@@ -1,0 +1,324 @@
+/* catppuccin latte */
+:root {
+  color-scheme: light;
+
+  --ctp-base: #eff1f5;
+  --ctp-mantle: #e6e9ef;
+  --ctp-surface0: #ccd0da;
+  --ctp-text: #4c4f69;
+  --ctp-subtext1: #5c5f77;
+  --ctp-subtext0: #6c6f85;
+  --ctp-overlay1: #8c8fa1;
+  --ctp-overlay2: #7c7f93;
+  --ctp-blue: #1e66f5;
+  --ctp-sky: #04a5e5;
+  --ctp-sapphire: #209fb5;
+  --ctp-teal: #179299;
+  --ctp-green: #40a02b;
+  --ctp-mauve: #8839ef;
+  --ctp-peach: #fe640b;
+  --ctp-red: #d20f39;
+  --ctp-yellow: #df8e1d;
+  --ctp-pink: #ea76cb;
+  --ctp-flamingo: #dd7878;
+  /* the asymptote diagrams are drawn with dark-theme colours */
+  --diagram-filter: invert(1) hue-rotate(180deg) saturate(1.4);
+}
+
+/* catppuccin mocha */
+:root[data-theme="night"] {
+  color-scheme: dark;
+
+  --ctp-base: #1e1e2e;
+  --ctp-mantle: #181825;
+  --ctp-surface0: #313244;
+  --ctp-text: #cdd6f4;
+  --ctp-subtext1: #bac2de;
+  --ctp-subtext0: #a6adc8;
+  --ctp-overlay1: #7f849c;
+  --ctp-overlay2: #9399b2;
+  --ctp-blue: #89b4fa;
+  --ctp-sky: #89dceb;
+  --ctp-sapphire: #74c7ec;
+  --ctp-teal: #94e2d5;
+  --ctp-green: #a6e3a1;
+  --ctp-mauve: #cba6f7;
+  --ctp-peach: #fab387;
+  --ctp-red: #f38ba8;
+  --ctp-yellow: #f9e2af;
+  --ctp-pink: #f5c2e7;
+  --ctp-flamingo: #f2cdcd;
+  --diagram-filter: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 8rem;
+  background: var(--ctp-base);
+  color: var(--ctp-text);
+  font:
+    1.125rem/1.75 Literata,
+    serif;
+  counter-reset: sidenote;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: normal;
+  line-height: 1.2;
+}
+
+h1 {
+  font-style: italic;
+}
+
+a {
+  color: var(--ctp-blue);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, currentcolor 35%, transparent);
+}
+
+a:hover {
+  color: var(--ctp-sapphire);
+}
+
+s {
+  color: var(--ctp-overlay1);
+  text-decoration-color: var(--ctp-red);
+}
+
+li::marker {
+  color: var(--ctp-mauve);
+}
+
+/* figures, quotes */
+
+figure {
+  margin: 2.5rem 0;
+  text-align: center;
+}
+
+figure img {
+  display: block;
+  margin: 0 auto;
+}
+
+figure img[src$=".svg"] {
+  filter: var(--diagram-filter);
+}
+
+figcaption {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ctp-subtext1);
+}
+
+figcaption cite {
+  color: var(--ctp-peach);
+}
+
+figure:has(blockquote) {
+  padding: 0.3em 1.3em;
+  border-left: 2px solid var(--ctp-yellow);
+  text-align: left;
+}
+
+figure:has(blockquote) figcaption {
+  text-align: right;
+}
+
+blockquote {
+  margin: 0;
+  font-style: italic;
+}
+
+summary {
+  font-style: italic;
+}
+
+/* code */
+
+code {
+  font-family: "JetBrains Mono", monospace;
+}
+
+pre {
+  padding: 0.6rem 0.75rem;
+  overflow-x: auto;
+  border: 1px solid var(--ctp-surface0);
+  background: var(--ctp-mantle);
+  line-height: 1.4;
+}
+
+pre code.hljs {
+  background: none;
+}
+
+:not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--ctp-surface0);
+  background: var(--ctp-mantle);
+  font-size: 0.9em;
+}
+
+/* theorem-style boxes */
+
+[class^="box"] {
+  --accent: var(--ctp-overlay1);
+
+  margin: 2rem 0;
+  padding: 0.75rem 1.3rem;
+  border-left: 3px solid var(--accent);
+  background: var(--ctp-mantle);
+}
+
+.boxtheorem {
+  --accent: var(--ctp-blue);
+}
+
+.boxproposition {
+  --accent: var(--ctp-sapphire);
+}
+
+.boxclaim {
+  --accent: var(--ctp-mauve);
+}
+
+.boxproblem {
+  --accent: var(--ctp-peach);
+}
+
+.boxexample {
+  --accent: var(--ctp-green);
+
+  border: 1px solid var(--accent);
+  background: none;
+}
+
+.title-block,
+.title-inline {
+  margin-right: 0.35em;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.title-block {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.proof {
+  color: var(--ctp-subtext1);
+}
+
+.qed {
+  float: right;
+  color: var(--ctp-overlay1);
+}
+
+/* sidenotes: below the sidemark's line, or beside it on wide screens */
+
+.sidemark {
+  counter-increment: sidenote;
+}
+
+.sidemark::after,
+.sidenote::before {
+  content: counter(sidenote);
+  font:
+    600 0.7em "JetBrains Mono",
+    monospace;
+  color: var(--ctp-mauve);
+}
+
+.sidemark::after {
+  position: relative;
+  top: -0.6em;
+  margin-left: 0.1em;
+}
+
+.sidenote::before {
+  position: relative;
+  top: -0.6em;
+  margin-right: 0.5em;
+}
+
+.sidenote {
+  display: block;
+  margin: 0.6rem 0 1rem;
+  padding: 0.5rem 0.9rem;
+  border-left: 2px solid var(--ctp-mauve);
+  background: var(--ctp-mantle);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ctp-subtext1);
+}
+
+@media (width >= 1040px) {
+  /* make room for sidenotes only when the post has any; otherwise the
+     post stays centered */
+  body:has(.sidenote) {
+    position: relative;
+    max-width: calc(660px + 17.5rem);
+    padding-right: calc(1.5rem + 17.5rem);
+  }
+
+  .sidenote {
+    position: absolute;
+    right: 1.5rem;
+    width: 15rem;
+    margin: 0;
+    padding: 0 0 0 0.75rem;
+    background: none;
+  }
+}
+
+/* theme toggle: moon in day mode, sun in night mode */
+
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--ctp-surface0);
+  border-radius: 50%;
+  background: var(--ctp-mantle);
+  color: var(--ctp-subtext1);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--ctp-yellow);
+}
+
+.theme-toggle svg {
+  width: 1.2rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:root:not([data-theme="night"]) .icon-sun,
+:root[data-theme="night"] .icon-moon {
+  display: none;
+}
+
+@media (width <= 480px) {
+  body {
+    padding: 3rem 1.1rem 6rem;
+    font-size: 1.05rem;
+  }
+}

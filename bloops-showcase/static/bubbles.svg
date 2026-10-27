@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120">
+  <rect width="400" height="120" rx="16" fill="#1a1b26"/>
+  <circle cx="60" cy="70" r="30" fill="none" stroke="#7aa2f7" stroke-width="4"/>
+  <circle cx="105" cy="45" r="18" fill="none" stroke="#bb9af7" stroke-width="4"/>
+  <circle cx="130" cy="85" r="12" fill="none" stroke="#9ece6a" stroke-width="4"/>
+  <text x="165" y="78" font-family="monospace" font-size="44" font-weight="bold" fill="#c0caf5">bloops</text>
+</svg>

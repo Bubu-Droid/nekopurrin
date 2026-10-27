@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Blog Name</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://avatar.artofproblemsolving.com/avatar_778606.png"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem("theme") ||
+          (matchMedia("(prefers-color-scheme: dark)").matches
+            ? "night"
+            : "day");
+      } catch {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: { "[+]": [["$", "$"]] },
+        },
+        svg: {
+          fontCache: "global",
+        },
+      };
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
+    ></script>
+  </head>
+  <body>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+      <svg class="icon-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+        />
+      </svg>
+    </button>
+
+    <header>
+      <h1>Your Blog Name</h1>
+    </header>
+
+    <main>
+      <h2>Posts</h2>
+      <!-- posts:start -->
+      <ul class="posts">
+        <li>
+          <a class="title" href="getting-started/">Getting Started</a>
+          <div class="meta">
+            <time datetime="2026-10-28">2026-10-28</time>
+            <span class="minutes">5 min</span>
+          </div>
+          <p class="excerpt">How to make this template yours, write a post with bloops, list it on the home page and publish it.</p>
+        </li>
+        <li>
+          <a class="title" href="bloops-showcase/">Bloops Showcase</a>
+          <div class="meta">
+            <time datetime="2026-10-27">2026-10-27</time>
+            <span class="minutes">2 min</span>
+          </div>
+          <p class="excerpt">Every tag bloops supports, from text formatting and lists to maths, code, diagrams and theorem boxes.</p>
+        </li>
+      </ul>
+      <!-- posts:end -->
+    </main>
+
+    <script>
+      const root = document.documentElement;
+
+      document.querySelector(".theme-toggle").onclick = () => {
+        root.dataset.theme = root.dataset.theme === "night" ? "day" : "night";
+        try {
+          localStorage.setItem("theme", root.dataset.theme);
+        } catch {}
+      };
+    </script>
+  </body>
+</html>

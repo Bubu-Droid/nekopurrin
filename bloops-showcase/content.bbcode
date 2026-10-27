@@ -1,0 +1,90 @@
+[h1]Bloops Showcase[/h1]
+
+[h2]Text formatting[/h2]
+[b]bold[/b], [i]italic[/i], [u]underline[/u], [s]strikethrough[/s],
+H[sub]2[/sub]O, E = mc[sup]2[/sup], and [color hex=#f38ba8]colored[/color]
+[b][color hex=#a6e3a1]bold green[/color][/b] text.
+Links open in a [url link="https://pypi.org/project/bloops/"]new tab[/url]
+or the [url link="https://github.com/Bubu-Droid/bloops" target=self]same tab[/url].
+Sidenotes sit in the margin.[sidemark][/sidemark]
+[sidenote]Like this one, numbered automatically.[/sidenote]
+
+[h3]Heading levels[/h3]
+[h4]Level four[/h4]
+[h5]Level five[/h5]
+[h6]Level six[/h6]
+
+[h2]Math & code[/h2]
+Inline math $e^{i\pi} + 1 = 0$ and display math:
+$$\sum_{k=1}^{n} k = \frac{n(n+1)}{2}$$
+Inline code like [code mode=inline]collatz(27)[/code] sits in the text, and code blocks are highlighted:
+[code lang=python]
+def collatz(n):
+    steps = 0
+    while n != 1:
+        n = n // 2 if n % 2 == 0 else 3 * n + 1
+        steps += 1
+    return steps
+[/code]
+[code]
+bloops -pc -i showcase
+[/code]
+
+[h2]Lists[/h2]
+[list]
+[*]Default bullets[/*]
+[*]Nested squares:
+[list style=square]
+[*]one[/*]
+[*]two[/*]
+[/list]
+[/*]
+[/list]
+[list type=ol]
+[*]Numbered[/*]
+[*]Ordered[/*]
+[/list]
+[list type=ol style=A]
+[*]Lettered[/*]
+[*]Ordered[/*]
+[/list]
+[list type=ol style=i]
+[*]Roman[/*]
+[*]Numerals[/*]
+[/list]
+
+[h2]Figures & quotes[/h2]
+[img src=static/bubbles.svg width=40 alt="bloops logo" caption="Rendered from an img tag"][/img]
+[asy src=static/triangle.svg label=triangle width=45 alt="A triangle" caption="Compiled from an asy block"]
+size(6cm);
+pen fg = rgb("cdd6f4");
+pair A = (0, 0), B = (4, 0), C = (1.2, 3), O = (2, 0.94);
+draw(A--B--C--cycle, fg + linewidth(0.8));
+draw(circle(O, abs(O - A)), rgb("89b4fa") + linewidth(0.8));
+dot("$A$", A, SW, rgb("cba6f7"));
+dot("$B$", B, SE, rgb("cba6f7"));
+dot("$C$", C, N, rgb("cba6f7"));
+[/asy]
+[quote author="Paul Erdős" link="https://en.wikipedia.org/wiki/Paul_Erd%C5%91s"]
+A mathematician is a device for turning coffee into theorems.
+[/quote]
+
+[h2]Math boxes[/h2]
+[theorem title=Pythagoras]
+In a right triangle, $a^2 + b^2 = c^2$.
+[/theorem]
+[proof]
+Rearrange four copies of the triangle inside a square of side $a + b$.
+[/proof]
+[lemma]Every tree with $n$ vertices has $n - 1$ edges.[/lemma]
+[proposition]$\sqrt{2}$ is irrational.[/proposition]
+[corollary title="of the lemma"]A forest with $c$ components has $n - c$ edges.[/corollary]
+[example]$3, 10, 5, 16, 8, 4, 2, 1$ is a Collatz sequence.[/example]
+[claim title=key]The sum of two odd numbers is even.[/claim]
+[exercise]Show that $n^3 - n$ is divisible by $6$.[/exercise]
+[problem title="AMC-style"]Find the remainder when $2^{10}$ is divided by $7$.[/problem]
+[hide label="Click to reveal the solution"]
+[soln]
+Since $2^3 \equiv 1 \pmod 7$, we get $2^{10} = (2^3)^3 \cdot 2 \equiv 2$.
+[/soln]
+[/hide]

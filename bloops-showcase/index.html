@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bloops Showcase</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://avatar.artofproblemsolving.com/avatar_778606.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@catppuccin/highlightjs@1.0.1/css/catppuccin-variables.css"
+    />
+    <link rel="stylesheet" href="static/style.css" />
+    <script>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem("theme") ||
+          (matchMedia("(prefers-color-scheme: dark)").matches
+            ? "night"
+            : "day");
+      } catch {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: { "[+]": [["$", "$"]] },
+        },
+        svg: {
+          fontCache: "global",
+        },
+        output: {
+          displayOverflow: "linebreak",
+          linebreaks: {
+            inline: true,
+            width: "100%",
+            lineleading: 0.2,
+            LinebreakVisitor: null,
+          },
+        },
+      };
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
+    ></script>
+    <script src="static/script.js" defer></script>
+  </head>
+  <body>
+    <h1>Bloops Showcase</h1>
+
+<h2>Text formatting</h2>
+<strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strikethrough</s>,
+H<sub>2</sub>O, E = mc<sup>2</sup>, and <span style="color: #f38ba8;">colored</span>
+<strong><span style="color: #a6e3a1;">bold green</span></strong> text.
+Links open in a <a href="https://pypi.org/project/bloops/" target="_blank">new tab</a>
+or the <a href="https://github.com/Bubu-Droid/bloops" target="_self">same tab</a>.
+Sidenotes sit in the margin.<span class="sidemark"></span>
+<span class="sidenote">Like this one, numbered automatically.</span>
+
+<h3>Heading levels</h3>
+<h4>Level four</h4>
+<h5>Level five</h5>
+<h6>Level six</h6>
+
+<h2>Math & code</h2>
+Inline math $e^{i\pi} + 1 = 0$ and display math:
+$$\sum_{k=1}^{n} k = \frac{n(n+1)}{2}$$
+Inline code like <code>collatz(27)</code> sits in the text, and code blocks are highlighted:
+<pre><code class="language-python">def collatz(n):
+    steps = 0
+    while n != 1:
+        n = n // 2 if n % 2 == 0 else 3 * n + 1
+        steps += 1
+    return steps</code></pre>
+<pre><code>bloops -pc -i showcase</code></pre>
+
+<h2>Lists</h2>
+<ul>
+<li>Default bullets</li>
+<li>Nested squares:
+<ul style="list-style-type: square;">
+<li>one</li>
+<li>two</li>
+</ul></li>
+</ul>
+<ol>
+<li>Numbered</li>
+<li>Ordered</li>
+</ol>
+<ol type="A">
+<li>Lettered</li>
+<li>Ordered</li>
+</ol>
+<ol type="i">
+<li>Roman</li>
+<li>Numerals</li>
+</ol>
+
+<h2>Figures & quotes</h2>
+<figure>
+<img src="static/bubbles.svg" alt="bloops logo" style="width: 40%; height: auto;">
+<figcaption>Rendered from an img tag</figcaption>
+</figure>
+<figure>
+<img src="static/triangle.svg" alt="A triangle" style="width: 45%; height: auto;">
+<figcaption>Compiled from an asy block</figcaption>
+</figure>
+<figure>
+<blockquote cite="https://en.wikipedia.org/wiki/Paul_Erd%C5%91s">
+<p>A mathematician is a device for turning coffee into theorems.</p>
+</blockquote>
+<figcaption>
+<cite>Paul Erdős</cite>
+</figcaption>
+</figure>
+
+<h2>Math boxes</h2>
+<div class="boxtheorem">
+<span class="title-block">Theorem (Pythagoras).</span>
+In a right triangle, $a^2 + b^2 = c^2$.
+</div>
+<div>
+<i class="proof">Proof.</i>
+Rearrange four copies of the triangle inside a square of side $a + b$.<span class="qed">&#9633;</span>
+</div>
+<div class="boxtheorem">
+<span class="title-block">Lemma.</span>
+Every tree with $n$ vertices has $n - 1$ edges.
+</div>
+<div class="boxproposition">
+<span class="title-block">Proposition.</span>
+$\sqrt{2}$ is irrational.
+</div>
+<div class="boxproposition">
+<span class="title-block">Corollary (of the lemma).</span>
+A forest with $c$ components has $n - c$ edges.
+</div>
+<div class="boxexample">
+<span class="title-block">Example.</span>
+$3, 10, 5, 16, 8, 4, 2, 1$ is a Collatz sequence.
+</div>
+<div class="boxclaim">
+<span class="title-inline">Claim (key) —</span>
+The sum of two odd numbers is even.
+</div>
+<div class="boxproblem">
+<span class="title-inline">Exercise.</span>
+Show that $n^3 - n$ is divisible by $6$.
+</div>
+<div class="boxproblem">
+<span class="title-inline">Problem (AMC-style).</span>
+Find the remainder when $2^{10}$ is divided by $7$.
+</div>
+<details><summary>Click to reveal the solution</summary>
+<div>
+<i class="proof">Solution.</i>
+Since $2^3 \equiv 1 \pmod 7$, we get $2^{10} = (2^3)^3 \cdot 2 \equiv 2$.<span class="qed">&#9632;</span>
+</div>
+</details>
+  </body>
+</html>

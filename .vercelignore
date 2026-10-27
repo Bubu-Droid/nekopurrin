@@ -1,0 +1,8 @@
+# sources and build tooling; only the generated html/css/js gets deployed
+build.py
+posts.json
+*/content.bbcode
+*/build/
+prek.toml
+.gitignore
+assets/

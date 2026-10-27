@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Getting Started",
+    "slug": "getting-started",
+    "date": "2026-10-28",
+    "excerpt": "How to make this template yours, write a post with bloops, list it on the home page and publish it."
+  },
+  {
+    "title": "Bloops Showcase",
+    "slug": "bloops-showcase",
+    "date": "2026-10-27",
+    "excerpt": "Every tag bloops supports, from text formatting and lists to maths, code, diagrams and theorem boxes."
+  }
+]

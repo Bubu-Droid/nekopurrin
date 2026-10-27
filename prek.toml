@@ -1,0 +1,20 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+default_install_hook_types = ["pre-push"]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "build",
+    name = "build.py (post list and page titles are up to date)",
+    entry = "python build.py --check",
+    language = "python",
+    language_version = ">=3.12",
+    pass_filenames = false,
+    always_run = true,
+    stages = ["pre-push"]
+  },
+]
