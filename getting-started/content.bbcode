@@ -93,6 +93,17 @@ python3 build.py  # needs Python 3.12+
 
 It writes the post list on the home page with each post's reading time, copies every post's title from its heading into [code mode=inline]posts.json[/code], and sets the title shown in the browser tab, which bloops leaves as a placeholder. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist or a slug with no built page, it stops and says which entry and what is wrong.
 
+[h2]Previewing the whole site[/h2]
+
+[code mode=inline]bloops -pc[/code] previews one post at a time. To click through the home page and every post together, run a local server from the blog's root folder, the one holding the home page's [code mode=inline]index.html[/code]:
+
+[code lang=bash]
+python3 -m http.server
+python3 -m http.server -d path/to/blog  # elsewhere
+[/code]
+
+Then open [url link=http://localhost:8000]localhost:8000[/url]. Posts are served at the same addresses as on the live site, such as [code mode=inline]/my-post/[/code].
+
 [h2]The pre-push hook[/h2]
 
 [url link=https://prek.j178.dev/]prek[/url] reruns the build script in check mode before every push. If the post list or a title was out of date, the script fixes it and the push stops, so you can commit the result and push again. Install the hook once in each clone:
