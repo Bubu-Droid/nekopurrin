@@ -5,6 +5,7 @@ posts.json
 */build/
 prek.toml
 ruff.toml
+tombi.toml
 rumdl.toml
 .gitignore
 README.md

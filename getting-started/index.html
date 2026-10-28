@@ -119,6 +119,7 @@ The posts need no changes: bloops gives every page its own default icon, and the
 ├── build.py            lists posts on index.html
 ├── prek.toml           the git hooks
 ├── ruff.toml           build script lint rules
+├── tombi.toml          TOML format rules
 ├── rumdl.toml          Markdown lint rules
 ├── vercel.json         URLs and security headers
 └── my-post/
@@ -188,7 +189,9 @@ Then open <a href="http://localhost:8000" target="_blank">localhost:8000</a>. Po
 
 <pre><code class="language-bash">prek install</code></pre>
 
-On every commit, it formats and checks the files you changed: <a href="https://docs.astral.sh/ruff/" target="_blank">ruff</a> and <a href="https://docs.basedpyright.com/" target="_blank">basedpyright</a> for the build script, <a href="https://github.com/rvben/rumdl" target="_blank">rumdl</a> for Markdown, and <a href="https://prettier.io/" target="_blank">prettier</a> for the home page, styles and scripts. Post pages are left alone, since bloops writes them again on every build. If a formatter changes a file, the commit stops; add the changes and commit again.
+On every commit, it formats and checks the files you changed: <a href="https://docs.astral.sh/ruff/" target="_blank">ruff</a> and <a href="https://docs.basedpyright.com/" target="_blank">basedpyright</a> for the build script, <a href="https://github.com/rvben/rumdl" target="_blank">rumdl</a> for Markdown, <a href="https://tombi-toml.github.io/tombi/" target="_blank">tombi</a> for TOML, and <a href="https://prettier.io/" target="_blank">prettier</a> for the home page, styles and scripts. <a href="https://github.com/codespell-project/codespell" target="_blank">codespell</a> looks for common misspellings, and a set of <a href="https://github.com/pre-commit/pre-commit-hooks" target="_blank">general checks</a> trims trailing whitespace, ends files with a newline, and catches merge-conflict markers and private keys. Post pages and their compiled diagrams are left alone, since bloops writes them again on every build. If a formatter changes a file, the commit stops; add the changes and commit again.
+
+It also checks each commit message against <a href="https://www.conventionalcommits.org/" target="_blank">Conventional Commits</a>: a type such as <code>feat</code>, <code>fix</code> or <code>docs</code>, an optional scope, then a summary, as in <code>feat(posts): add a post on graphs</code>. A message that does not follow it stops the commit.
 
 Before every push, it reruns the build script in check mode. If the post list or a title was out of date, the script fixes it and the push stops, so you can commit the result and push again.
 

@@ -16,7 +16,8 @@ server.
   theorem boxes and sidenotes.
 - A home page post list with dates, reading times and excerpts, generated from
   `posts.json`.
-- Git hooks: ruff, basedpyright, rumdl and prettier on every commit, and a
+- Git hooks: ruff, basedpyright, rumdl, tombi, prettier, codespell and general
+  file checks on every commit, Conventional Commits for commit messages, and a
   pre-push check that the post list and page titles are up to date.
 - A purring Catppuccin cat as the favicon, easy to swap for your own.
 - Deploys to Vercel as-is: no build step.

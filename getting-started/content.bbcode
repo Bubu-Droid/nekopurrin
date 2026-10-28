@@ -57,6 +57,7 @@ your-blog/
 ├── build.py            lists posts on index.html
 ├── prek.toml           the git hooks
 ├── ruff.toml           build script lint rules
+├── tombi.toml          TOML format rules
 ├── rumdl.toml          Markdown lint rules
 ├── vercel.json         URLs and security headers
 └── my-post/
@@ -141,7 +142,9 @@ Then open [url link=http://localhost:8000]localhost:8000[/url]. Posts are served
 prek install
 [/code]
 
-On every commit, it formats and checks the files you changed: [url link=https://docs.astral.sh/ruff/]ruff[/url] and [url link=https://docs.basedpyright.com/]basedpyright[/url] for the build script, [url link=https://github.com/rvben/rumdl]rumdl[/url] for Markdown, and [url link=https://prettier.io/]prettier[/url] for the home page, styles and scripts. Post pages are left alone, since bloops writes them again on every build. If a formatter changes a file, the commit stops; add the changes and commit again.
+On every commit, it formats and checks the files you changed: [url link=https://docs.astral.sh/ruff/]ruff[/url] and [url link=https://docs.basedpyright.com/]basedpyright[/url] for the build script, [url link=https://github.com/rvben/rumdl]rumdl[/url] for Markdown, [url link=https://tombi-toml.github.io/tombi/]tombi[/url] for TOML, and [url link=https://prettier.io/]prettier[/url] for the home page, styles and scripts. [url link=https://github.com/codespell-project/codespell]codespell[/url] looks for common misspellings, and a set of [url link=https://github.com/pre-commit/pre-commit-hooks]general checks[/url] trims trailing whitespace, ends files with a newline, and catches merge-conflict markers and private keys. Post pages and their compiled diagrams are left alone, since bloops writes them again on every build. If a formatter changes a file, the commit stops; add the changes and commit again.
+
+It also checks each commit message against [url link=https://www.conventionalcommits.org/]Conventional Commits[/url]: a type such as [code mode=inline]feat[/code], [code mode=inline]fix[/code] or [code mode=inline]docs[/code], an optional scope, then a summary, as in [code mode=inline]feat(posts): add a post on graphs[/code]. A message that does not follow it stops the commit.
 
 Before every push, it reruns the build script in check mode. If the post list or a title was out of date, the script fixes it and the push stops, so you can commit the result and push again.
 
