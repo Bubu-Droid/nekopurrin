@@ -4,6 +4,8 @@ posts.json
 */content.bbcode
 */build/
 prek.toml
+ruff.toml
+rumdl.toml
 .gitignore
 README.md
 assets/

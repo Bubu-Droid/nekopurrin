@@ -1,4 +1,4 @@
-# Blog
+# <img src="favicon.svg" alt="" width="40" align="absmiddle"> nekopurrin
 
 A static blog template. Posts are written in BBCode and turned into HTML by
 [bloops](https://github.com/Bubu-Droid/bloops); the site itself is plain HTML,
@@ -16,7 +16,9 @@ server.
   theorem boxes and sidenotes.
 - A home page post list with dates, reading times and excerpts, generated from
   `posts.json`.
-- A pre-push hook that keeps the post list and page titles up to date.
+- Git hooks: ruff, basedpyright, rumdl and prettier on every commit, and a
+  pre-push check that the post list and page titles are up to date.
+- A purring Catppuccin cat as the favicon, easy to swap for your own.
 - Deploys to Vercel as-is: no build step.
 
 ## The home page
@@ -28,7 +30,7 @@ server.
 ## Quick start
 
 1. Create a repository from this template and clone it.
-2. Install the tools and the pre-push hook:
+2. Install the tools and the git hooks:
 
    ```bash
    uv tool install bloops
@@ -59,6 +61,9 @@ server.
    root folder (or `python3 -m http.server -d path/to/blog` from anywhere else)
    and opening <http://localhost:8000>. Then commit and push; Vercel deploys
    every push.
+
+After updating bloops, rebuild every post from its BBCode in one go with
+`uv run build.py --rebuild`.
 
 ## Documentation
 

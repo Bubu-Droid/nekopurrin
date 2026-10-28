@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- a purring cat in Catppuccin Mocha: base, mauve, pink and red -->
+  <rect width="64" height="64" rx="14" fill="#1e1e2e" />
+  <path d="M11 32 15 7 31 20Z M53 32 49 7 33 20Z" fill="#cba6f7" />
+  <path d="M17 22 18.5 13 25 19Z M47 22 45.5 13 39 19Z" fill="#f5c2e7" />
+  <ellipse cx="32" cy="38" rx="22" ry="18" fill="#cba6f7" />
+  <circle cx="17" cy="45" r="3.5" fill="#f5c2e7" />
+  <circle cx="47" cy="45" r="3.5" fill="#f5c2e7" />
+  <path
+    d="M19 37q4-5 8 0 M37 37q4-5 8 0 M32 44.5q-2 3-4.5 1.5 M32 44.5q2 3 4.5 1.5"
+    fill="none"
+    stroke="#1e1e2e"
+    stroke-width="2.6"
+    stroke-linecap="round"
+  />
+  <path d="M29.5 41.5h5l-2.5 3Z" fill="#f38ba8" />
+</svg>
