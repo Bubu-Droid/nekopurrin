@@ -1,8 +1,0 @@
-line-length = 80
-
-[lint]
-extend-select = ["ANN", "D", "DOC"]
-unfixable = ["F401"]
-
-[lint.pydocstyle]
-convention = "google"
