@@ -94,7 +94,7 @@ Either way, you then have the <code>bloops</code> and <code>prek</code> commands
 <li>Replace <code>Your Blog Name</code> in <code>index.html</code>. It appears twice: in the page title and in the heading.</li>
 <li>Replace the favicon with your own, described below.</li>
 <li>Delete the example posts: remove their folders and their entries in <code>posts.json</code>. With no posts, the home page says so.</li>
-<li>Install the git hooks, described below.</li>
+<li>Install the git hook, described below.</li>
 </ol>
 
 Colours are Catppuccin tokens at the top of <code>style.css</code>, for the home page, and of <code>post.css</code>, for posts. Both files follow the reader's light or dark preference, and the button in the corner flips it.
@@ -117,10 +117,7 @@ The posts need no changes: bloops gives every page its own default icon, and the
 ├── favicon.ico         icon for older browsers
 ├── posts.json          slug, date, excerpt
 ├── build.py            lists posts on index.html
-├── prek.toml           the git hooks
-├── ruff.toml           build script lint rules
-├── tombi.toml          TOML format rules
-├── rumdl.toml          Markdown lint rules
+├── prek.toml           the pre-push hook
 ├── vercel.json         URLs and security headers
 └── my-post/
     ├── content.bbcode  the post, in BBCode
@@ -183,19 +180,15 @@ python3 -m http.server -d path/to/blog  # elsewhere</code></pre>
 
 Then open <a href="http://localhost:8000" target="_blank">localhost:8000</a>. Posts are served at the same addresses as on the live site, such as <code>/my-post/</code>.
 
-<h2>The git hooks</h2>
+<h2>The git hook</h2>
 
-<a href="https://prek.j178.dev/" target="_blank">prek</a> runs checks on every commit and push. Install the hooks once in each clone:
+<a href="https://prek.j178.dev/" target="_blank">prek</a> runs a check before every push. Install the hook once in each clone:
 
 <pre><code class="language-bash">prek install</code></pre>
 
-On every commit, it formats and checks the files you changed: <a href="https://docs.astral.sh/ruff/" target="_blank">ruff</a> and <a href="https://docs.basedpyright.com/" target="_blank">basedpyright</a> for the build script, <a href="https://github.com/rvben/rumdl" target="_blank">rumdl</a> for Markdown, <a href="https://tombi-toml.github.io/tombi/" target="_blank">tombi</a> for TOML, and <a href="https://prettier.io/" target="_blank">prettier</a> for the home page, styles and scripts. <a href="https://github.com/codespell-project/codespell" target="_blank">codespell</a> looks for common misspellings, and a set of <a href="https://github.com/pre-commit/pre-commit-hooks" target="_blank">general checks</a> trims trailing whitespace, ends files with a newline, and catches merge-conflict markers and private keys. Post pages and their compiled diagrams are left alone, since bloops writes them again on every build. If a formatter changes a file, the commit stops; add the changes and commit again.
-
-It also checks each commit message against <a href="https://www.conventionalcommits.org/" target="_blank">Conventional Commits</a>: a type such as <code>feat</code>, <code>fix</code> or <code>docs</code>, an optional scope, then a summary, as in <code>feat(posts): add a post on graphs</code>. A message that does not follow it stops the commit.
-
 Before every push, it reruns the build script in check mode. If the post list or a title was out of date, the script fixes it and the push stops, so you can commit the result and push again.
 
-prek downloads every tool the hooks need the first time they run, Node for prettier included, so none of them has to be installed. The build check runs in a Python environment prek sets up itself, so it works even when the system Python is older than 3.12.
+The check runs in a Python environment prek sets up itself, so it works even when the system Python is older than 3.12.
 
 <h2>Publishing</h2>
 

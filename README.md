@@ -16,9 +16,7 @@ server.
   theorem boxes and sidenotes.
 - A home page post list with dates, reading times and excerpts, generated from
   `posts.json`.
-- Git hooks: ruff, basedpyright, rumdl, tombi, prettier, codespell and general
-  file checks on every commit, Conventional Commits for commit messages, and a
-  pre-push check that the post list and page titles are up to date.
+- A pre-push git hook that checks the post list and page titles are up to date.
 - A purring Catppuccin cat as the favicon, easy to swap for your own.
 - Deploys to Vercel as-is: no build step.
 
@@ -31,7 +29,7 @@ server.
 ## Quick start
 
 1. Create a repository from this template and clone it.
-2. Install the tools and the git hooks:
+2. Install the tools and the git hook:
 
    ```bash
    uv tool install bloops
