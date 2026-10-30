@@ -41,7 +41,7 @@
 body {
   max-width: 660px;
   margin: 0 auto;
-  padding: 5rem 1.5rem 8rem;
+  padding: 5rem 1.5rem 3rem;
   background: var(--ctp-base);
   color: var(--ctp-text);
   font:
@@ -166,9 +166,21 @@ header {
   display: none;
 }
 
+/* credits footer, last on every page (written by build.py) */
+
+.credits {
+  margin-top: 6rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ctp-surface0);
+  font:
+    0.8rem/1.6 "JetBrains Mono",
+    monospace;
+  color: var(--ctp-subtext0);
+}
+
 @media (width <= 480px) {
   body {
-    padding: 3rem 1.1rem 6rem;
+    padding: 3rem 1.1rem 2.5rem;
     font-size: 1.05rem;
   }
 

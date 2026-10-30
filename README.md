@@ -18,6 +18,7 @@ server.
   `posts.json`.
 - A pre-push git hook that checks the post list and page titles are up to date.
 - A purring Catppuccin cat as the favicon, easy to swap for your own.
+- A footer on every page crediting bloops and this template.
 - Deploys to Vercel as-is: no build step.
 
 ## The home page

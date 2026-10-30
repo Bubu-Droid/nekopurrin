@@ -5,8 +5,8 @@
 """Render posts.json into the post list in index.html.
 
 Also takes each post's title from the first <h1> on its page and writes it
-into posts.json and the page's <title>, and points each post page at the
-blog's favicon. Run after building or editing a post with bloops:
+into posts.json and the page's <title>, points each post page at the
+blog's favicon, and ends every page with the credits footer. Run after building or editing a post with bloops:
 uv run build.py  (or python3 build.py, with Python 3.12+)
 
 With --check (used by the pre-push hook), fail if anything had to be updated.
@@ -43,6 +43,17 @@ ICON_LINK = re.compile(r'[ \t]*<link\s+rel="icon"[^>]*>\n?')
 ICON_LINKS = """    <link rel="icon" href="../favicon.ico" sizes="any" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 """
+CREDITS_FOOTER = re.compile(
+    r'[ \t]*<footer class="credits">.*?</footer>\n?', re.DOTALL
+)
+# the last thing in every page's <body>
+CREDITS = """    <footer class="credits">
+      Made with <a href="https://github.com/Bubu-Droid/bloops">bloops</a>
+      and the
+      <a href="https://github.com/Bubu-Droid/nekopurrin">nekopurrin</a>
+      template.
+    </footer>
+"""
 
 
 class Post(TypedDict):
@@ -63,6 +74,7 @@ class PostText(HTMLParser):
         super().__init__()
         self.in_body = False
         self.in_title = False
+        self.in_footer = False
         self.seen_title = False
         self.text: list[str] = []
         self.title_parts: list[str] = []
@@ -76,24 +88,28 @@ class PostText(HTMLParser):
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
     ) -> None:
-        """Track <body> and the title."""
+        """Track <body>, the credits footer and the title."""
         if tag == "body":
             self.in_body = True
+        elif tag == "footer":
+            self.in_footer = True
         elif tag == "h1" and not self.seen_title:
             self.in_title = self.seen_title = True
 
     @override
     def handle_endtag(self, tag: str) -> None:
-        """Track leaving <body> and the title."""
+        """Track leaving <body>, the credits footer and the title."""
         if tag == "body":
             self.in_body = False
+        elif tag == "footer":
+            self.in_footer = False
         elif tag == "h1":
             self.in_title = False
 
     @override
     def handle_data(self, data: str) -> None:
-        """Keep body text, and the title's text separately."""
-        if not self.in_body:
+        """Keep body text but the footer's, and the title's separately."""
+        if not self.in_body or self.in_footer:
             return
         self.text.append(data)
         if self.in_title:
@@ -192,8 +208,25 @@ def write_if_changed(path: Path, old: str, new: str) -> bool:
     return True
 
 
-def set_page_head(post: Post) -> bool:
-    """Replace the post page's <title> and favicon links (bloops' defaults)."""
+def with_credits(html: str, where: str) -> str:
+    """End the page's <body> with the credits footer, replacing any old one.
+
+    Raises:
+        SystemExit: If the page has no </body>.
+    """
+    html = CREDITS_FOOTER.sub("", html)
+    body_end = html.rfind("</body>")
+    if body_end < 0:
+        raise SystemExit(f"{where} has no </body>")
+    line_start = html.rfind("\n", 0, body_end) + 1
+    return html[:line_start] + CREDITS + html[line_start:]
+
+
+def update_page(post: Post) -> bool:
+    """Set the post page's <title>, favicon links and credits footer.
+
+    Bloops writes its own title and favicon, and no footer.
+    """
     page = ROOT / post["slug"] / "index.html"
     html = page.read_text(encoding="utf-8")
     title = f"<title>{escape(post['title'])}</title>"
@@ -205,6 +238,7 @@ def set_page_head(post: Post) -> bool:
     if not after:
         raise SystemExit(f"{post['slug']}/index.html has no favicon link")
     new_html = before + ICON_LINKS + "".join(after)
+    new_html = with_credits(new_html, f"{post['slug']}/index.html")
     return write_if_changed(page, html, new_html)
 
 
@@ -257,9 +291,9 @@ def rebuild_pages() -> None:
 
 
 def main() -> None:
-    """Sync titles, update each post page's head, then rewrite the list."""
+    """Sync titles, update each post page, then rewrite the home page."""
     parser = argparse.ArgumentParser(
-        description="Update the post list in index.html and each post's head."
+        description="Update the post list in index.html and each post's page."
     )
     mode = parser.add_mutually_exclusive_group()
     _ = mode.add_argument(
@@ -287,7 +321,7 @@ def main() -> None:
         )
         changed.append("posts.json")
     changed += [
-        f"{post['slug']}/index.html" for post, _ in posts if set_page_head(post)
+        f"{post['slug']}/index.html" for post, _ in posts if update_page(post)
     ]
     index = ROOT / "index.html"
     html = index.read_text(encoding="utf-8")
@@ -296,7 +330,7 @@ def main() -> None:
         raise SystemExit(f"index.html is missing the {START} / {END} markers")
     block = f"{START}\n      {IGNORE}\n      {render(posts)}\n      {END}"
     # a function, so backslashes in the block (e.g. TeX) aren't read as escapes
-    new_html = pattern.sub(lambda _: block, html)
+    new_html = with_credits(pattern.sub(lambda _: block, html), "index.html")
     if write_if_changed(index, html, new_html):
         changed.append("index.html")
     print(f"index.html: {len(posts)} post(s)")

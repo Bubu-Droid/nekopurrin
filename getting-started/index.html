@@ -93,6 +93,7 @@ Either way, you then have the <code>bloops</code> and <code>prek</code> commands
 <li>Create a repository from this template and clone it.</li>
 <li>Replace <code>Your Blog Name</code> in <code>index.html</code>. It appears twice: in the page title and in the heading.</li>
 <li>Replace the favicon with your own, described below.</li>
+<li>Keep, reword or drop the credits footer, described below.</li>
 <li>Delete the example posts: remove their folders and their entries in <code>posts.json</code>. With no posts, the home page says so.</li>
 <li>Install the git hook, described below.</li>
 </ol>
@@ -105,6 +106,8 @@ The favicon is <code>favicon.svg</code>, with <code>favicon.ico</code> as a fall
   -define icon:auto-resize=48,32,16 favicon.ico</code></pre>
 
 The posts need no changes: bloops gives every page its own default icon, and the build script swaps it for these two files.
+
+Every page ends with a footer that credits bloops and this template. The build script writes it into the home page and every post, so it lives in one place: <code>CREDITS</code> near the top of <code>build.py</code>. Change it there and run the build script to update every page. To drop it, delete the footer from the home page and post pages and remove <code>CREDITS</code> and the <code>with_credits</code> calls from the script.
 
 <h2>How it is laid out</h2>
 
@@ -158,7 +161,7 @@ Then run the build script:
 <pre><code class="language-bash">uv run build.py   # uv picks the Python
 python3 build.py  # needs Python 3.12+</code></pre>
 
-It writes the post list on the home page with each post's reading time, copies every post's title from its heading into <code>posts.json</code>, and sets each post's browser-tab title and favicon, which bloops leaves as placeholders. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist or a slug with no built page, it stops and says which entry and what is wrong.
+It writes the post list on the home page with each post's reading time, copies every post's title from its heading into <code>posts.json</code>, sets each post's browser-tab title and favicon, which bloops leaves as placeholders, and ends every page with the credits footer. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist or a slug with no built page, it stops and says which entry and what is wrong.
 
 When bloops itself is updated, its page template may change too, and pages built with the old version fall behind. Rebuild every post from its <code>content.bbcode</code> in one go:
 
@@ -199,5 +202,11 @@ Import the repository on Vercel. There is no build step and no framework preset 
 <li>Add it to <code>posts.json</code> and run the build script.</li>
 <li>Commit and push.</li>
 </ol>
+    <footer class="credits">
+      Made with <a href="https://github.com/Bubu-Droid/bloops">bloops</a>
+      and the
+      <a href="https://github.com/Bubu-Droid/nekopurrin">nekopurrin</a>
+      template.
+    </footer>
   </body>
 </html>
