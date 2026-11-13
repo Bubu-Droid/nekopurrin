@@ -5,6 +5,8 @@ A static blog template. Posts are written in BBCode and turned into HTML by
 CSS and a little JavaScript, with no framework and nothing running on the
 server.
 
+**Live demo:** <https://nekopurrin.vercel.app>
+
 ![A maths post in light mode and a code post in dark mode, split diagonally](assets/preview.png)
 
 *The posts shown are examples, not part of the template.*
