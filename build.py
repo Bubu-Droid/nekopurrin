@@ -333,6 +333,19 @@ def check_site_url() -> None:
         )
 
 
+def check_robots() -> None:
+    """Make sure robots.txt points crawlers at the sitemap at SITE_URL.
+
+    Raises:
+        SystemExit: If it does not, giving the line it needs.
+    """
+    line = f"Sitemap: {SITE_URL.rstrip('/')}/sitemap.xml"
+    robots = ROOT / "robots.txt"
+    text = robots.read_text(encoding="utf-8") if robots.is_file() else ""
+    if line not in text.splitlines():
+        raise SystemExit(f"robots.txt: its Sitemap: line must be {line!r}")
+
+
 def update_file(name: str, text: str) -> bool:
     """Write text to the file at the root; return whether it changed."""
     path = ROOT / name
@@ -386,6 +399,7 @@ def main() -> None:
     args = parser.parse_args()
     check = cast("bool", args.check)
     check_site_url()
+    check_robots()
     if cast("bool", args.rebuild):
         rebuild_pages()
     posts, retitled = load_posts()
