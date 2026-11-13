@@ -92,6 +92,7 @@ Either way, you then have the <code>bloops</code> and <code>prek</code> commands
 <ol>
 <li>Create a repository from this template and clone it.</li>
 <li>Replace <code>Your Blog Name</code> in <code>index.html</code>. It appears twice: in the page title and in the heading.</li>
+<li>Set <code>SITE_URL</code> near the top of <code>build.py</code> to the address the blog will be served at, such as <code>https://my-blog.vercel.app</code>. The build script needs it for the sitemap, described under Publishing, and stops until it is set.</li>
 <li>Replace the favicon with your own, described below.</li>
 <li>Keep, reword or drop the credits footer, described below.</li>
 <li>Delete the example posts: remove their folders and their entries in <code>posts.json</code>. With no posts, the home page says so.</li>
@@ -121,6 +122,7 @@ Every page ends with a footer that credits bloops and this template. The build s
 ├── posts.json          slug, date, excerpt
 ├── build.py            lists posts on index.html
 ├── prek.toml           the pre-push hook
+├── sitemap.xml         written by build.py
 ├── vercel.json         URLs and security headers
 └── my-post/
     ├── content.bbcode  the post, in BBCode
@@ -161,7 +163,7 @@ Then run the build script:
 <pre><code class="language-bash">uv run build.py   # uv picks the Python
 python3 build.py  # needs Python 3.12+</code></pre>
 
-It writes the post list on the home page with each post's reading time, copies every post's title from its heading into <code>posts.json</code>, sets each post's browser-tab title and favicon, which bloops leaves as placeholders, and ends every page with the credits footer. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist or a slug with no built page, it stops and says which entry and what is wrong.
+It writes the post list on the home page with each post's reading time, copies every post's title from its heading into <code>posts.json</code>, sets each post's browser-tab title and favicon, which bloops leaves as placeholders, ends every page with the credits footer, and writes <code>sitemap.xml</code>, described under Publishing. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist or a slug with no built page, it stops and says which entry and what is wrong.
 
 When bloops itself is updated, its page template may change too, and pages built with the old version fall behind. Rebuild every post from its <code>content.bbcode</code> in one go:
 
@@ -196,6 +198,8 @@ The check runs in a Python environment prek sets up itself, so it works even whe
 <h2>Publishing</h2>
 
 Import the repository on Vercel. There is no build step and no framework preset to pick: the files are served as they are, and every push to the main branch deploys. The sources, the build script and the hook configuration are listed in <code>.vercelignore</code>, so only the pages, styles, scripts and diagrams are uploaded. Any other static host works too; it only needs to serve <code>my-post/index.html</code> at <code>/my-post/</code>.
+
+Every run of the build script also writes <code>sitemap.xml</code> from <code>SITE_URL</code>. It lists the home page and every post with its date, so that search engines can find them all. If the blog moves to a new address, update <code>SITE_URL</code> and run the script again. Submit the sitemap's address, such as <code>https://my-blog.vercel.app/sitemap.xml</code>, in Google Search Console or Bing Webmaster Tools to have the blog indexed sooner.
 
 <ol>
 <li>Build the post with bloops.</li>
