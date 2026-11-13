@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://my-blog.vercel.app/sitemap.xml
+Sitemap: https://nekopurrin.vercel.app/sitemap.xml
