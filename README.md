@@ -49,10 +49,12 @@ server.
    bloops -i my-post       # build once
    ```
 
-4. Set `SITE_URL` near the top of `build.py` to the blog's address, such as
-   `https://my-blog.vercel.app`; the script stops until it is set. Put the same
-   address in the `Sitemap:` line of `robots.txt`. Then add the post to
-   `posts.json` and update the home page and sitemap:
+4. Change `SITE_URL` near the top of `build.py` from the template demo's
+   address to your blog's, such as `https://my-blog.vercel.app`, and set the
+   `Sitemap:` line of `robots.txt` to match, as in
+   `Sitemap: https://my-blog.vercel.app/sitemap.xml`. The script stops until
+   both are done. Then add the post to `posts.json` and update the home page
+   and sitemap:
 
    ```json
    { "slug": "my-post", "date": "2026-10-28", "excerpt": "What the post is about." }
