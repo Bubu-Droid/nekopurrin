@@ -27,7 +27,7 @@ Either way, you then have the [code mode=inline]bloops[/code] and [code mode=inl
 [list type=ol]
 [*]Create a repository from this template and clone it.[/*]
 [*]Replace [code mode=inline]Your Blog Name[/code] in [code mode=inline]index.html[/code]. It appears twice: in the page title and in the heading.[/*]
-[*]Set [code mode=inline]SITE_URL[/code] near the top of [code mode=inline]build.py[/code] to the address the blog will be served at, such as [code mode=inline]https://my-blog.vercel.app[/code]. The build script needs it for the sitemap, described under Publishing, and stops until it is set.[/*]
+[*]Set [code mode=inline]SITE_URL[/code] near the top of [code mode=inline]build.py[/code] to the address the blog will be served at, such as [code mode=inline]https://my-blog.vercel.app[/code]. The build script needs it for the sitemap and [code mode=inline]robots.txt[/code], described under Publishing, and stops until it is set.[/*]
 [*]Replace the favicon with your own, described below.[/*]
 [*]Keep, reword or drop the credits footer, described below.[/*]
 [*]Delete the example posts: remove their folders and their entries in [code mode=inline]posts.json[/code]. With no posts, the home page says so.[/*]
@@ -61,6 +61,7 @@ your-blog/
 ├── build.py            lists posts on index.html
 ├── prek.toml           the pre-push hook
 ├── sitemap.xml         written by build.py
+├── robots.txt          written by build.py
 ├── vercel.json         URLs and security headers
 └── my-post/
     ├── content.bbcode  the post, in BBCode
@@ -108,7 +109,7 @@ uv run build.py   # uv picks the Python
 python3 build.py  # needs Python 3.12+
 [/code]
 
-It writes the post list on the home page with each post's reading time, copies every post's title from its heading into [code mode=inline]posts.json[/code], sets each post's browser-tab title and favicon, which bloops leaves as placeholders, ends every page with the credits footer, and writes [code mode=inline]sitemap.xml[/code], described under Publishing. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist or a slug with no built page, it stops and says which entry and what is wrong.
+It writes the post list on the home page with each post's reading time, copies every post's title from its heading into [code mode=inline]posts.json[/code], sets each post's browser-tab title and favicon, which bloops leaves as placeholders, ends every page with the credits footer, and writes [code mode=inline]sitemap.xml[/code] and [code mode=inline]robots.txt[/code], described under Publishing. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist or a slug with no built page, it stops and says which entry and what is wrong.
 
 When bloops itself is updated, its page template may change too, and pages built with the old version fall behind. Rebuild every post from its [code mode=inline]content.bbcode[/code] in one go:
 
@@ -152,7 +153,7 @@ The check runs in a Python environment prek sets up itself, so it works even whe
 
 Import the repository on Vercel. There is no build step and no framework preset to pick: the files are served as they are, and every push to the main branch deploys. The sources, the build script and the hook configuration are listed in [code mode=inline].vercelignore[/code], so only the pages, styles, scripts and diagrams are uploaded. Any other static host works too; it only needs to serve [code mode=inline]my-post/index.html[/code] at [code mode=inline]/my-post/[/code].
 
-Every run of the build script also writes [code mode=inline]sitemap.xml[/code] from [code mode=inline]SITE_URL[/code]. It lists the home page and every post with its date, so that search engines can find them all. If the blog moves to a new address, update [code mode=inline]SITE_URL[/code] and run the script again. Submit the sitemap's address, such as [code mode=inline]https://my-blog.vercel.app/sitemap.xml[/code], in Google Search Console or Bing Webmaster Tools to have the blog indexed sooner.
+Every run of the build script also writes [code mode=inline]sitemap.xml[/code] from [code mode=inline]SITE_URL[/code]. It lists the home page and every post with its date, so that search engines can find them all. It writes [code mode=inline]robots.txt[/code] beside it, which lets every crawler in and gives the sitemap's address, so search engines find the sitemap on their own. If the blog moves to a new address, update [code mode=inline]SITE_URL[/code] and run the script again. Submit the sitemap's address, such as [code mode=inline]https://my-blog.vercel.app/sitemap.xml[/code], in Google Search Console or Bing Webmaster Tools to have the blog indexed sooner.
 
 [list type=ol]
 [*]Build the post with bloops.[/*]
