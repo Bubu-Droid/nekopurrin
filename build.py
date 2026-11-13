@@ -55,10 +55,13 @@ CREDITS = """    <footer class="credits">
       template.
     </footer>
 """
-# the address the blog is served at, such as "https://my-blog.vercel.app",
-# for sitemap.xml; build.py stops until it is set
-SITE_URL = ""
+# the address the blog is served at, for sitemap.xml; it starts as the
+# template demo's, and build.py stops until a copy of the template sets its own
+SITE_URL = "https://nekopurrin.vercel.app"
 SITE_URL_FORM = re.compile(r"https?://[^/\s]+(/\S*)?")
+# the template's own demo, and the repository it is built from
+DEMO_URL = "https://nekopurrin.vercel.app"
+TEMPLATE_REPO = re.compile(r"[:/]Bubu-Droid/nekopurrin(\.git)?/?$", re.I)
 
 
 class Post(TypedDict):
@@ -292,8 +295,23 @@ def render_sitemap(posts: list[tuple[Post, PostText]]) -> str:
     )
 
 
+def is_template_repo() -> bool:
+    """Whether this is the template's own repository, not a copy of it."""
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(ROOT), "remote", "get-url", "origin"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except FileNotFoundError:
+        return False
+    url = result.stdout.strip()
+    return not result.returncode and bool(TEMPLATE_REPO.search(url))
+
+
 def check_site_url() -> None:
-    """Make sure SITE_URL is set to an http(s) address.
+    """Make sure SITE_URL is an http(s) address, and not the demo's in a copy.
 
     Raises:
         SystemExit: If it is not, saying how to set it.
@@ -307,6 +325,11 @@ def check_site_url() -> None:
         raise SystemExit(
             "build.py: SITE_URL must look like 'https://my-blog.vercel.app'"
             f", not {SITE_URL!r}"
+        )
+    if SITE_URL.rstrip("/") == DEMO_URL and not is_template_repo():
+        raise SystemExit(
+            "build.py: SITE_URL is still the nekopurrin demo's address; set it"
+            " to your blog's, such as 'https://my-blog.vercel.app'"
         )
 
 
