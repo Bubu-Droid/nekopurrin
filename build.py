@@ -6,8 +6,7 @@
 
 Also takes each post's title from the first <h1> on its page and writes it
 into posts.json and the page's <title>, points each post page at the
-blog's favicon, ends every page with the credits footer, and writes
-robots.txt, which points search engines at the sitemap. Run after
+blog's favicon, and ends every page with the credits footer. Run after
 building or editing a post with bloops:
 uv run build.py  (or python3 build.py, with Python 3.12+)
 
@@ -57,7 +56,7 @@ CREDITS = """    <footer class="credits">
     </footer>
 """
 # the address the blog is served at, such as "https://my-blog.vercel.app",
-# for sitemap.xml and robots.txt; build.py stops until it is set
+# for sitemap.xml; build.py stops until it is set
 SITE_URL = ""
 SITE_URL_FORM = re.compile(r"https?://[^/\s]+(/\S*)?")
 
@@ -311,12 +310,6 @@ def check_site_url() -> None:
         )
 
 
-def render_robots() -> str:
-    """Render robots.txt: let every crawler in, and point it at the sitemap."""
-    sitemap = f"{SITE_URL.rstrip('/')}/sitemap.xml"
-    return f"User-agent: *\nAllow: /\n\nSitemap: {sitemap}\n"
-
-
 def update_file(name: str, text: str) -> bool:
     """Write text to the file at the root; return whether it changed."""
     path = ROOT / name
@@ -399,8 +392,6 @@ def main() -> None:
     if update_file("sitemap.xml", render_sitemap(posts)):
         changed.append("sitemap.xml")
     print(f"sitemap.xml: {len(posts) + 1} page(s)")
-    if update_file("robots.txt", render_robots()):
-        changed.append("robots.txt")
     if changed and check:
         raise SystemExit(
             "build.py updated "
