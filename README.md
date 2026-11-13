@@ -19,6 +19,8 @@ server.
 - A pre-push git hook that checks the post list and page titles are up to date.
 - A purring Catppuccin cat as the favicon, easy to swap for your own.
 - A footer on every page crediting bloops and this template.
+- A `sitemap.xml` for search engines, built from the blog's address in
+  `build.py`.
 - Deploys to Vercel as-is: no build step.
 
 ## The home page
@@ -47,7 +49,9 @@ server.
    bloops -i my-post       # build once
    ```
 
-4. Add the post to `posts.json` and update the home page:
+4. Set `SITE_URL` near the top of `build.py` to the blog's address, such as
+   `https://my-blog.vercel.app`; the script stops until it is set. Then add the
+   post to `posts.json` and update the home page and sitemap:
 
    ```json
    { "slug": "my-post", "date": "2026-10-28", "excerpt": "What the post is about." }
