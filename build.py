@@ -2,11 +2,12 @@
 # requires-python = ">=3.12"
 # dependencies = []
 # ///
-"""Render posts.json into the post list in index.html.
+"""Render posts.json into the post list in index.html and into sitemap.xml.
 
 Also takes each post's title from the first <h1> on its page and writes it
 into posts.json and the page's <title>, points each post page at the
-blog's favicon, and ends every page with the credits footer. Run after building or editing a post with bloops:
+blog's favicon, and ends every page with the credits footer. Run after
+building or editing a post with bloops:
 uv run build.py  (or python3 build.py, with Python 3.12+)
 
 With --check (used by the pre-push hook), fail if anything had to be updated.
@@ -54,6 +55,10 @@ CREDITS = """    <footer class="credits">
       template.
     </footer>
 """
+# the address the blog is served at, such as "https://my-blog.vercel.app",
+# for sitemap.xml; build.py stops until it is set
+SITE_URL = ""
+SITE_URL_FORM = re.compile(r"https?://[^/\s]+(/\S*)?")
 
 
 class Post(TypedDict):
@@ -263,6 +268,57 @@ def render(posts: list[tuple[Post, PostText]]) -> str:
     return f'<ul class="posts">\n{items}\n      </ul>'
 
 
+def render_sitemap(posts: list[tuple[Post, PostText]]) -> str:
+    """Render sitemap.xml: the home page, then every post, newest first.
+
+    Each post's lastmod is its date; the home page's is the newest post's.
+    """
+    base = SITE_URL.rstrip("/")
+    newest_first = sorted(
+        (post for post, _ in posts), key=lambda p: p["date"], reverse=True
+    )
+    pages = [(f"{base}/", newest_first[0]["date"] if newest_first else "")]
+    pages += [(f"{base}/{p['slug']}/", p["date"]) for p in newest_first]
+    urls = "".join(
+        f"  <url>\n    <loc>{escape(loc)}</loc>\n"
+        + (f"    <lastmod>{lastmod}</lastmod>\n" if lastmod else "")
+        + "  </url>\n"
+        for loc, lastmod in pages
+    )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{urls}</urlset>\n"
+    )
+
+
+def check_site_url() -> None:
+    """Make sure SITE_URL is set to an http(s) address.
+
+    Raises:
+        SystemExit: If it is not, saying how to set it.
+    """
+    if not SITE_URL:
+        raise SystemExit(
+            "build.py: set SITE_URL near the top of build.py to the blog's"
+            " address, such as 'https://my-blog.vercel.app'"
+        )
+    if not SITE_URL_FORM.fullmatch(SITE_URL):
+        raise SystemExit(
+            "build.py: SITE_URL must look like 'https://my-blog.vercel.app'"
+            f", not {SITE_URL!r}"
+        )
+
+
+def update_sitemap(posts: list[tuple[Post, PostText]]) -> bool:
+    """Write sitemap.xml; return whether it changed."""
+    sitemap = ROOT / "sitemap.xml"
+    old = sitemap.read_text(encoding="utf-8") if sitemap.is_file() else ""
+    changed = write_if_changed(sitemap, old, render_sitemap(posts))
+    print(f"sitemap.xml: {len(posts) + 1} page(s)")
+    return changed
+
+
 def rebuild_pages() -> None:
     """Build every post's index.html again from its content.bbcode.
 
@@ -291,7 +347,7 @@ def rebuild_pages() -> None:
 
 
 def main() -> None:
-    """Sync titles, update each post page, then rewrite the home page."""
+    """Sync titles, update each post page, then the home page and sitemap."""
     parser = argparse.ArgumentParser(
         description="Update the post list in index.html and each post's page."
     )
@@ -308,6 +364,7 @@ def main() -> None:
     )
     args = parser.parse_args()
     check = cast("bool", args.check)
+    check_site_url()
     if cast("bool", args.rebuild):
         rebuild_pages()
     posts, retitled = load_posts()
@@ -334,6 +391,8 @@ def main() -> None:
     if write_if_changed(index, html, new_html):
         changed.append("index.html")
     print(f"index.html: {len(posts)} post(s)")
+    if update_sitemap(posts):
+        changed.append("sitemap.xml")
     if changed and check:
         raise SystemExit(
             "build.py updated "
