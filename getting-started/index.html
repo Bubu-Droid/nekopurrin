@@ -67,14 +67,14 @@
   <body>
     <h1>Getting Started</h1>
 
-This blog is a template. Every page is plain HTML, CSS and a little JavaScript, and posts are written in BBCode and turned into HTML by <a href="https://github.com/Bubu-Droid/bloops" target="_blank">bloops</a>. Nothing runs on the server, so any host that serves static files will do. This post covers making the template yours, writing a post and publishing it.
+This blog is a template. Every page is plain HTML, CSS, and a little JavaScript, and posts are written in BBCode and turned into HTML by <a href="https://github.com/Bubu-Droid/bloops" target="_blank">bloops</a>. Nothing runs on the server, so any host that serves static files will do. This post covers making the template yours, writing a post, and publishing it.
 
 <h2>What you need</h2>
 
 <ul>
-<li><a href="https://docs.astral.sh/uv/" target="_blank">uv</a>, to install bloops and prek, and to run the build script with a suitable Python.</li>
-<li><a href="https://git-scm.com/" target="_blank">Git</a>, and a host for static sites. The template comes set up for <a href="https://vercel.com/" target="_blank">Vercel</a>.</li>
-<li><a href="https://asymptote.sourceforge.io/" target="_blank">Asymptote</a>, only if your posts draw diagrams. Bloops calls <code>asy</code> to compile them to SVG.</li>
+<li><a href="https://docs.astral.sh/uv/" target="_blank">uv</a> installs bloops and prek and runs the build script with a suitable Python.</li>
+<li><a href="https://git-scm.com/" target="_blank">Git</a> keeps track of the blog, and a host for static sites serves it. The template comes set up for <a href="https://vercel.com/" target="_blank">Vercel</a>.</li>
+<li><a href="https://asymptote.sourceforge.io/" target="_blank">Asymptote</a> is needed only if your posts draw diagrams. Bloops calls <code>asy</code> to compile them to SVG.</li>
 </ul>
 
 Install the two command-line tools once. Each gets its own isolated environment, and <code>uv tool upgrade --all</code> updates them later.
@@ -95,7 +95,7 @@ Either way, you then have the <code>bloops</code> and <code>prek</code> commands
 <li>Set <code>SITE_URL</code> near the top of <code>build.py</code> to the address the blog will be served at, such as <code>https://my-blog.vercel.app</code>. It starts as the address of this template's demo, and the build script stops until you change it.</li>
 <li>Set the <code>Sitemap:</code> line of <code>robots.txt</code> to the same address followed by <code>/sitemap.xml</code>, such as <code>Sitemap: https://my-blog.vercel.app/sitemap.xml</code>. The build script stops until it matches <code>SITE_URL</code>. Both are described under Search engines.</li>
 <li>Replace the favicon with your own, described below.</li>
-<li>Keep, reword or drop the credits footer, described below.</li>
+<li>Keep, reword, or drop the credits footer, described below.</li>
 <li>Delete the example posts: remove their folders and their entries in <code>posts.json</code>. With no posts, the home page says so.</li>
 <li>Install the git hook, described below.</li>
 </ol>
@@ -139,7 +139,7 @@ Because each post's stylesheet and script are stubs pointing at the shared files
 <h2>Writing a post</h2>
 
 <ol>
-<li>Make a folder named after the post's slug, which becomes its address: lowercase letters, digits and hyphens, such as <code>my-post</code>.</li>
+<li>Make a folder named after the post's slug, which becomes its address: lowercase letters, digits, and hyphens, such as <code>my-post</code>.</li>
 <li>Copy <code>static/style.css</code> and <code>static/script.js</code> from an existing post into <code>my-post/static/</code>. Bloops only writes its own copies of these when they are missing, so the stubs survive every rebuild.</li>
 <li>Write <code>my-post/content.bbcode</code>, starting with the title as a level-one heading. The build script takes the post's title from there. The Bloops Showcase post shows every tag bloops knows; its <code>content.bbcode</code> is a good reference.</li>
 <li>Build the post with bloops.</li>
@@ -165,7 +165,7 @@ Then run the build script:
 <pre><code class="language-bash">uv run build.py   # uv picks the Python
 python3 build.py  # needs Python 3.12+</code></pre>
 
-It writes the post list on the home page with each post's reading time, copies every post's title from its heading into <code>posts.json</code>, sets each post's browser-tab title and favicon, which bloops leaves as placeholders, ends every page with the credits footer, and writes <code>sitemap.xml</code>, described under Search engines. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist or a slug with no built page, it stops and says which entry and what is wrong.
+It writes the post list on the home page with each post's reading time, copies every post's title from its heading into <code>posts.json</code>, sets each post's browser-tab title and favicon, which bloops leaves as placeholders, ends every page with the credits footer, and writes <code>sitemap.xml</code>, described under Search engines. Run it again after every bloops build. If an entry is wrong, for example a missing excerpt, a date that does not exist, or a slug with no built page, it stops and says which entry and what is wrong.
 
 When bloops itself is updated, its page template may change too, and pages built with the old version fall behind. Rebuild every post from its <code>content.bbcode</code> in one go:
 
@@ -199,7 +199,7 @@ The check runs in a Python environment prek sets up itself, so it works even whe
 
 <h2>Publishing</h2>
 
-Import the repository on Vercel. There is no build step and no framework preset to pick: the files are served as they are, and every push to the main branch deploys. The sources, the build script and the hook configuration are listed in <code>.vercelignore</code>, so only the pages, styles, scripts and diagrams are uploaded. Any other static host works too; it only needs to serve <code>my-post/index.html</code> at <code>/my-post/</code>.
+Import the repository on Vercel. There is no build step and no framework preset to pick: the files are served as they are, and every push to the main branch deploys. The sources, the build script, and the hook configuration are listed in <code>.vercelignore</code>, so only the pages, styles, scripts, and diagrams are uploaded. Any other static host works too; it only needs to serve <code>my-post/index.html</code> at <code>/my-post/</code>.
 
 <ol>
 <li>Build the post with bloops.</li>
