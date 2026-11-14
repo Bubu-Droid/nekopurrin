@@ -2,7 +2,7 @@
 
 A static blog template. Posts are written in BBCode and turned into HTML by
 [bloops](https://github.com/Bubu-Droid/bloops); the site itself is plain HTML,
-CSS and a little JavaScript, with no framework and nothing running on the
+CSS, and a little JavaScript, with no framework and nothing running on the
 server.
 
 **Live demo:** <https://nekopurrin.vercel.app>
@@ -13,23 +13,23 @@ server.
 
 ## Features
 
-- Light and dark themes that follow the reader's system, with a toggle.
+- Light and dark themes that follow the reader's system, with a toggle
 - Math through MathJax, highlighted code, Asymptote diagrams compiled to SVG,
-  theorem boxes and sidenotes.
-- A home page post list with dates, reading times and excerpts, generated from
-  `posts.json`.
-- A pre-push git hook that checks the post list and page titles are up to date.
-- A purring Catppuccin cat as the favicon, easy to swap for your own.
-- A footer on every page crediting bloops and this template.
+  theorem boxes, and sidenotes
+- A home page post list with dates, reading times, and excerpts, generated
+  from `posts.json`
+- A pre-push git hook that checks the post list and page titles are up to date
+- A purring Catppuccin cat as the favicon, easy to swap for your own
+- A footer on every page crediting bloops and this template
 - A `sitemap.xml` for search engines, built from the blog's address in
-  `build.py`, and a `robots.txt` that points crawlers at it.
-- Deploys to Vercel as-is: no build step.
+  `build.py`, and a `robots.txt` that points crawlers at it
+- Deploys to Vercel as-is, with no build step
 
 ## The home page
 
 ![The home page's post list, in light mode and dark mode, split diagonally](assets/home.png)
 
-*Every post gets its title, date, reading time and excerpt, newest first.*
+*Every post gets its title, date, reading time, and excerpt, newest first.*
 
 ## Quick start
 
