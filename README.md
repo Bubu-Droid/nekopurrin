@@ -7,14 +7,14 @@ server.
 
 **Live demo:** <https://nekopurrin.vercel.app>
 
-![A maths post in light mode and a code post in dark mode, split diagonally](assets/preview.png)
+![A math post in light mode and a code post in dark mode, split diagonally](assets/preview.png)
 
 *The posts shown are examples, not part of the template.*
 
 ## Features
 
 - Light and dark themes that follow the reader's system, with a toggle.
-- Maths through MathJax, highlighted code, Asymptote diagrams compiled to SVG,
+- Math through MathJax, highlighted code, Asymptote diagrams compiled to SVG,
   theorem boxes and sidenotes.
 - A home page post list with dates, reading times and excerpts, generated from
   `posts.json`.
