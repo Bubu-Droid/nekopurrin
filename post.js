@@ -22,7 +22,7 @@ const notes = document.querySelectorAll(".sidenote");
 new ResizeObserver(() => {
   let floor = 0;
   notes.forEach((note, i) => {
-    if (!marks[i] || !note.offsetParent) return; // e.g. inside a closed <details>
+    if (!marks[i] || !note.offsetParent) return; // e.g., inside a closed <details>
     const top = Math.max(
       marks[i].getBoundingClientRect().top -
         document.body.getBoundingClientRect().top,

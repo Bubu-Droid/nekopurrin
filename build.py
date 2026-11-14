@@ -12,7 +12,7 @@ uv run build.py  (or python3 build.py, with Python 3.12+)
 
 With --check (used by the pre-push hook), fail if anything had to be updated.
 With --rebuild, first build every post's page again from its content.bbcode
-with bloops, e.g. after updating bloops; set BLOOPS to run another bloops,
+with bloops, e.g., after updating bloops; set BLOOPS to run another bloops,
 such as BLOOPS="uv run --project ../bloops bloops".
 """
 
@@ -96,7 +96,7 @@ class PostText(HTMLParser):
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
     ) -> None:
-        """Track <body>, the credits footer and the title."""
+        """Track <body>, the credits footer, and the title."""
         if tag == "body":
             self.in_body = True
         elif tag == "footer":
@@ -106,7 +106,7 @@ class PostText(HTMLParser):
 
     @override
     def handle_endtag(self, tag: str) -> None:
-        """Track leaving <body>, the credits footer and the title."""
+        """Track leaving <body>, the credits footer, and the title."""
         if tag == "body":
             self.in_body = False
         elif tag == "footer":
@@ -116,7 +116,7 @@ class PostText(HTMLParser):
 
     @override
     def handle_data(self, data: str) -> None:
-        """Keep body text but the footer's, and the title's separately."""
+        """Collect the body text, minus the footer, and the title on its own."""
         if not self.in_body or self.in_footer:
             return
         self.text.append(data)
@@ -231,7 +231,7 @@ def with_credits(html: str, where: str) -> str:
 
 
 def update_page(post: Post) -> bool:
-    """Set the post page's <title>, favicon links and credits footer.
+    """Set the post page's <title>, favicon links, and credits footer.
 
     Bloops writes its own title and favicon, and no footer.
     """
@@ -381,7 +381,7 @@ def rebuild_pages() -> None:
 
 
 def main() -> None:
-    """Sync titles, update each post page, the home page and sitemap."""
+    """Sync titles, then update the post pages, home page, and sitemap."""
     parser = argparse.ArgumentParser(
         description="Update the post list in index.html and each post's page."
     )
@@ -421,7 +421,7 @@ def main() -> None:
     if not pattern.search(html):
         raise SystemExit(f"index.html is missing the {START} / {END} markers")
     block = f"{START}\n      {IGNORE}\n      {render(posts)}\n      {END}"
-    # a function, so backslashes in the block (e.g. TeX) aren't read as escapes
+    # a function, so backslashes in the block (e.g., TeX) aren't read as escapes
     new_html = with_credits(pattern.sub(lambda _: block, html), "index.html")
     if write_if_changed(index, html, new_html):
         changed.append("index.html")

@@ -87,7 +87,7 @@ header {
   border-bottom: 1px solid var(--ctp-surface0);
 }
 
-/* post list: title, date and reading time, excerpt */
+/* post list: the title, the date and reading time, and the excerpt */
 
 .posts {
   margin: 0;
