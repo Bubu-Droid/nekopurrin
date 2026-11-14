@@ -21,7 +21,7 @@
   --ctp-yellow: #df8e1d;
   --ctp-pink: #ea76cb;
   --ctp-flamingo: #dd7878;
-  /* the asymptote diagrams are drawn with dark-theme colours */
+  /* the asymptote diagrams are drawn with dark-theme colors */
   --diagram-filter: invert(1) hue-rotate(180deg) saturate(1.4);
 }
 
