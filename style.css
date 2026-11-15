@@ -87,6 +87,17 @@ header {
   border-bottom: 1px solid var(--ctp-surface0);
 }
 
+header h1 {
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--ctp-subtext1);
+}
+
 /* post list: the title, the date and reading time, and the excerpt */
 
 .posts {
