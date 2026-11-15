@@ -134,13 +134,13 @@ Every page ends with a footer that credits bloops and this template. The build s
         ├── script.js   loads ../../post.js
         └── diagram.svg Asymptote diagrams</code></pre>
 
-Because each post's stylesheet and script are stubs pointing at the shared files, changing the look of every post means editing one file. The <code>post.css</code> and <code>post.js</code> here are copies of bloops's own <code>static/style.css</code> and <code>static/script.js</code>; copy them over again to pick up a newer bloops style.
+Each post's <code>static/style.css</code> imports the root <code>post.css</code> with an <code>@import</code> statement, and its <code>static/script.js</code> loads the root <code>post.js</code>, so changing the look of every post means editing one file. The <code>post.css</code> and <code>post.js</code> here are copies of bloops's own <code>static/style.css</code> and <code>static/script.js</code>; copy them over again to pick up a newer bloops style.
 
 <h2>Writing a post</h2>
 
 <ol>
 <li>Make a folder named after the post's slug, which becomes its address: lowercase letters, digits, and hyphens, such as <code>my-post</code>.</li>
-<li>Copy <code>static/style.css</code> and <code>static/script.js</code> from an existing post into <code>my-post/static/</code>. Bloops only writes its own copies of these when they are missing, so the stubs survive every rebuild.</li>
+<li>Copy the entire <code>static/style.css</code> and <code>static/script.js</code> files from an existing post into <code>my-post/static/</code>. They import the root <code>post.css</code> and <code>post.js</code>. Bloops only writes its own copies of these when they are missing, so the stubs survive every rebuild.</li>
 <li>Write <code>my-post/content.bbcode</code>, starting with the title as a level-one heading. The build script takes the post's title from there. The Bloops Showcase post shows every tag bloops knows; its <code>content.bbcode</code> is a good reference.</li>
 <li>Build the post with bloops.</li>
 </ol>
