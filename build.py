@@ -426,6 +426,10 @@ def main() -> None:
     if write_if_changed(index, html, new_html):
         changed.append("index.html")
     print(f"index.html: {len(posts)} post(s)")
+    not_found = ROOT / "404.html"
+    html = not_found.read_text(encoding="utf-8")
+    if write_if_changed(not_found, html, with_credits(html, "404.html")):
+        changed.append("404.html")
     if update_file("sitemap.xml", render_sitemap(posts)):
         changed.append("sitemap.xml")
     print(f"sitemap.xml: {len(posts) + 1} page(s)")

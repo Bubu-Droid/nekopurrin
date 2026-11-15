@@ -109,12 +109,13 @@ The favicon is <code>favicon.svg</code>, with <code>favicon.ico</code> as a fall
 
 The posts need no changes: bloops gives every page its own default icon, and the build script swaps it for these two files.
 
-Every page ends with a footer that credits bloops and this template. The build script writes it into the home page and every post, so it lives in one place: <code>CREDITS</code> near the top of <code>build.py</code>. Change it there and run the build script to update every page. To drop it, delete the footer from the home page and post pages and remove <code>CREDITS</code> and the <code>with_credits</code> calls from the script.
+Every page ends with a footer that credits bloops and this template. The build script writes it into the home page, the 404 page, and every post, so it lives in one place: <code>CREDITS</code> near the top of <code>build.py</code>. Change it there and run the build script to update every page. To drop it, delete the footer from the home page, the 404 page, and the post pages, and remove <code>CREDITS</code> and the <code>with_credits</code> calls from the script.
 
 <h2>How it is laid out</h2>
 
 <pre><code class="language-plaintext">your-blog/
 ├── index.html          home page and post list
+├── 404.html            page for missing addresses
 ├── style.css           home page styles
 ├── post.css            styles for every post
 ├── post.js             theme toggle, sidenotes
@@ -199,7 +200,7 @@ The check runs in a Python environment prek sets up itself, so it works even whe
 
 <h2>Publishing</h2>
 
-Import the repository on Vercel. There is no build step and no framework preset to pick: the files are served as they are, and every push to the main branch deploys. The sources, the build script, and the hook configuration are listed in <code>.vercelignore</code>, so only the pages, styles, scripts, and diagrams are uploaded. Any other static host works too; it only needs to serve <code>my-post/index.html</code> at <code>/my-post/</code>.
+Import the repository on Vercel. There is no build step and no framework preset to pick: the files are served as they are, and every push to the main branch deploys. The sources, the build script, and the hook configuration are listed in <code>.vercelignore</code>, so only the pages, styles, scripts, and diagrams are uploaded. Any other static host works too; it only needs to serve <code>my-post/index.html</code> at <code>/my-post/</code>, and <code>404.html</code> for any address that does not exist. Vercel does the latter on its own; on other hosts, it may need a setting. The local server from Previewing the whole site does not use it, so open <code>/404.html</code> there to see the page.
 
 <ol>
 <li>Build the post with bloops.</li>

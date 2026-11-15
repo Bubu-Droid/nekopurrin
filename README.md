@@ -23,6 +23,7 @@ server.
 - A footer on every page crediting bloops and this template
 - A `sitemap.xml` for search engines, built from the blog's address in
   `build.py`, and a `robots.txt` that points crawlers at it
+- A 404 page for addresses that don't exist
 - Deploys to Vercel as-is, with no build step
 
 ## The home page
